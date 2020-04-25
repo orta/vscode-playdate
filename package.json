@@ -1,0 +1,92 @@
+{
+  "name": "playdate",
+  "displayName": "Playdate",
+  "description": "Simple Playdate support for VSCode",
+  "publisher": "Orta",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.44.0"
+  },
+  "license": "MIT",
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:lua"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "debuggers": [
+      {
+        "type": "playdate",
+        "label": "Playdate",
+        "program": "./out/startSim.js",
+        "runtime": "node",
+        "configurationAttributes": {
+          "launch": {
+            "properties": {}
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "playdate",
+            "request": "launch",
+            "name": "Run app in Playdate simulator"
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Playdate: Run",
+            "description": "Compile and launch in Playdate sim.",
+            "body": {
+              "type": "playdate",
+              "request": "launch",
+              "name": "Run the app in Playdate simulator",
+              "required": [
+                "source",
+                "output"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "description": "Path to the root of your source code.",
+                  "default": "${workspaceFolder}/Source"
+                },
+                "output": {
+                  "type": "string",
+                  "description": "Path to the root of your outputs.",
+                  "default": "${workspaceFolder}/Output"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.44.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "glob": "^7.1.6",
+    "mocha": "^7.0.1",
+    "typescript": "^3.7.5",
+    "vscode-debugprotocol": "^1.40.0",
+    "vscode-test": "^1.3.0"
+  },
+  "dependencies": {
+    "vscode-debugadapter": "^1.40.0"
+  }
+}
