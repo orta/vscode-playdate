@@ -3,7 +3,7 @@
   "displayName": "Playdate",
   "description": "Simple Playdate support for VSCode",
   "publisher": "Orta",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.44.0"
   },
@@ -64,6 +64,9 @@
       }
     ]
   },
+  "extensionDependencies": [
+    "sumneko.lua"
+  ],
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",

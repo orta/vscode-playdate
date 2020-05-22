@@ -1,12 +1,17 @@
 # VS Code Playdate
 
-Only really adds the ability to hit "Run" and trigger opening the sim
+Only really adds the ability to hit "Run" and trigger opening the sim, but has docs on how to set up the Lua extension
 
 ### Getting Set Up
 
-1. Install the .visx - it should also install the Lua extension
+1. Install the .vsix - it should also install the [Lua extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua)
+
+```sh
+code --install-extension vscode-playdate.vsix
+```
+
 2. Go to your Playdate game
-3. Add the SDK library to the Lua extension by editing `.vscode/settings.json`
+3. Add the SDK library to the Lua extension by adding/editing `.vscode/settings.json`
 
 ```diff
 {
@@ -56,5 +61,13 @@ This runs `pdc Source Output`.
 }
 ```
 
-
 That's it, you get auto-completion and the ability to hit a command to trigger loading it into the sim.
+
+### Notes
+
+The playdate version of Lua has a few extras:
+
+- The `import` function
+- `+=` and `-=` 
+
+Both of these don't exist in normal Lua, so `import` is declared as a global, and I've been converting `+=` to the long form `x = x + 1`.
