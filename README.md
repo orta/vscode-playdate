@@ -4,14 +4,8 @@ Only really adds the ability to hit "Run" and trigger opening the sim, but has d
 
 ### Getting Set Up
 
-1. Install the .vsix - it should also install the [Lua extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua)
-
-```sh
-code --install-extension vscode-playdate.vsix
-```
-
-2. Go to your Playdate game
-3. Add the SDK library to the Lua extension by adding/editing `.vscode/settings.json`
+1. Go to your Playdate game
+1. Add the SDK library to the Lua extension by adding/editing `.vscode/settings.json`
 
 ```diff
 {
@@ -24,7 +18,7 @@ code --install-extension vscode-playdate.vsix
 
 Change my name to yours too...
 
-4. Add a compile task by creating `.vscode/tasks.json`
+1. Add a compile task by creating `.vscode/tasks.json`
 
 ```json
 {
@@ -40,7 +34,7 @@ Change my name to yours too...
 
 This runs `pdc Source Output`.
 
-5. Add a launch task by creating `.vscode/launch.json`:
+1. Add a launch task by creating `.vscode/launch.json`:
 
 ```json
 {

@@ -4,6 +4,10 @@
   "description": "Simple Playdate support for VSCode",
   "publisher": "Orta",
   "version": "0.0.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orta/vscode-playdate"
+  },
   "engines": {
     "vscode": "^1.44.0"
   },
