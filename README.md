@@ -2,6 +2,8 @@
 
 Only really adds the ability to hit "Run" and trigger opening the sim, but has docs on how to set up the Lua extension
 
+<img src="./screenshots/desktop.jpeg">
+
 ### Getting Set Up
 
 1. Go to your Playdate game
