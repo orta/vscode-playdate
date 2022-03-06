@@ -59,7 +59,7 @@
                 "output": {
                   "type": "string",
                   "description": "Path to the root of your outputs.",
-                  "default": "${workspaceFolder}/Output"
+                  "default": "${workspaceFolder}/Output.pdx"
                 }
               }
             }
