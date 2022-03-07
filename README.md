@@ -12,9 +12,9 @@ Only really adds the ability to hit "Run" and trigger opening the sim, but has d
 ```diff
 {
   "Lua.diagnostics.globals": ["playdate", "import"],
-  "Lua.workspace.library": {
-    "/Users/ortatherox/Developer/PlaydateSDK/CoreLibs": true
-  }
+  "Lua.workspace.library": [
+    "/Users/ortatherox/Developer/PlaydateSDK/CoreLibs"
+  ]
 }
 ```
 
@@ -28,13 +28,13 @@ Change my name to yours too...
 	"tasks": [{
 			"label": "Compile App",
 			"command": "pdc",
-			"args": ["Source", "Output"],
+			"args": ["Source", "Output.pdx"],
 			"type": "shell"
 	}]
 }
 ```
 
-This runs `pdc Source Output`.
+This runs `pdc Source Output.pdx`.
 
 1. Add a launch task by creating `.vscode/launch.json`:
 
@@ -51,7 +51,7 @@ This runs `pdc Source Output`.
       "name": "Run app in Playdate simulator",
       "preLaunchTask": "Compile App",
       "source": "${workspaceFolder}/Source",
-      "output": "${workspaceFolder}/Output",
+      "output": "${workspaceFolder}/Output.pdx",
     }
   ]
 }
