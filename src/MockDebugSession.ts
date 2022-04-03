@@ -10,7 +10,24 @@ interface LaunchRequestArguments extends DebugProtocol.LaunchRequestArguments {
 export class MockDebugSession extends LoggingDebugSession {
   protected async launchRequest(response: DebugProtocol.LaunchResponse, args: LaunchRequestArguments) {
     // Open the Sim, and then close this debugger
-    spawnSync("open", [args.output]);
+    var cmd: string;
+    var spawnArgs: string[];
+
+    switch (process.platform) {
+      case "win32":
+        cmd = "cmd";
+        spawnArgs = ["/c", "start", `${args.output}/main.pdz`];
+        break;
+      case "darwin":
+        cmd = "open";
+        spawnArgs = [args.output];
+        break;
+      default:
+        console.log("os not supported");
+        return;
+    }
+
+    spawnSync(cmd, spawnArgs);
     this.sendEvent(new TerminatedEvent());
   }
 }
