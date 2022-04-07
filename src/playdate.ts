@@ -27,7 +27,6 @@ export function compile(): boolean {
 export function runSimulator(): boolean {
     const ws = workspaceRoot();
     const sdk = sdkPath();
-    const simulator = `${sdk}/bin/PlaydateSimulator`;
 
     if (!(ws && sdk)) {
         return false;
@@ -35,10 +34,12 @@ export function runSimulator(): boolean {
 
     switch (process.platform) {
     case "win32":
+        var simulator = `${sdk}\bin\PlaydateSimulator`;
         spawnSync("cmd", ["/c", simulator, `${ws}/Output.pdx`]);
         break;
     case "darwin":
-        spawnSync(simulator, [`${ws}/Output.pdx`]);
+        var simulator = `${sdk}/bin/Playdate Simulator.app`;
+        spawnSync("open", [simulator, `${ws}/Output.pdx`]);
         break;
     default:
 		showMessage(`Platform '${process.platform}' is not supported.`);
