@@ -1,9 +1,14 @@
 # Change Log
 
-All notable changes to the "playdate" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
 ## [Unreleased]
 
-- Initial release
+- convert plugin from debugger to command
+
+## [0.0.5]
+
+- add support for Winodws
+
+
+## [0.0.1]
+
+- initial release

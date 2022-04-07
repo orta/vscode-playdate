@@ -3,7 +3,7 @@
   "displayName": "Playdate",
   "description": "Simple Playdate support for VSCode",
   "publisher": "Orta",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/orta/vscode-playdate"
@@ -16,57 +16,29 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:lua"
+    "onCommand:extension.runSimulator"
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "debuggers": [
+    "commands": [
       {
-        "type": "playdate",
-        "label": "Playdate",
-        "program": "./out/startSim.js",
-        "runtime": "node",
-        "configurationAttributes": {
-          "launch": {
-            "properties": {}
-          }
-        },
-        "initialConfigurations": [
-          {
-            "type": "playdate",
-            "request": "launch",
-            "name": "Run app in Playdate simulator"
-          }
-        ],
-        "configurationSnippets": [
-          {
-            "label": "Playdate: Run",
-            "description": "Compile and launch in Playdate sim.",
-            "body": {
-              "type": "playdate",
-              "request": "launch",
-              "name": "Run the app in Playdate simulator",
-              "required": [
-                "source",
-                "output"
-              ],
-              "properties": {
-                "source": {
-                  "type": "string",
-                  "description": "Path to the root of your source code.",
-                  "default": "${workspaceFolder}/Source"
-                },
-                "output": {
-                  "type": "string",
-                  "description": "Path to the root of your outputs.",
-                  "default": "${workspaceFolder}/Output.pdx"
-                }
-              }
-            }
-          }
-        ]
+        "command": "extension.runSimulator",
+        "title": "Run in Playdate simulator"
       }
-    ]
+    ],
+    "contributes": {
+      "configuration": {
+        "id": "vscode-playdate",
+        "title": "Playdate",
+        "properties": {
+          "playdate.sdkPath": {
+            "type": "string",
+            "default": "${env:PLAYDATE_SDK_PATH}",
+            "description": "The path to the Playdate SDK (default to PLAYDATE_SDK_PATH environment variable)"
+          }
+        }
+      }
+    }
   },
   "extensionDependencies": [
     "sumneko.lua"
