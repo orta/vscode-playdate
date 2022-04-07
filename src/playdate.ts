@@ -53,13 +53,13 @@ function showMessage(message: string) {
 }
 
 function sdkPath(): string | null {
-    if (process.env.PLAYDATE_SDK_PATH !== undefined) {
+    if (process.env.PLAYDATE_SDK_PATH) {
         return process.env.PLAYDATE_SDK_PATH;
     }
 
     const settings = vscode.workspace.getConfiguration();
     const sdkPath = settings.get<string>('playdate.sdkPath');
-    if (sdkPath !== undefined) {
+    if (sdkPath) {
         return sdkPath;
     }
 
