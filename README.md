@@ -12,7 +12,7 @@ determine where that is installed.
 
 Either configure your environment variable `PLAYDATE_SDK_PATH` or add it in the
 settings. While in the settings it's also a good idea to add the Lua workspace
-libraries.:
+libraries:
 
 ```json
 {
