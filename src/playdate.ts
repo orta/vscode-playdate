@@ -1,80 +1,34 @@
-import { spawnSync } from "child_process";
-import * as vscode from "vscode";
+import { spawnSync, SpawnSyncReturns } from "child_process";
 
-export function compile(): boolean {
-    const ws = workspaceRoot();
-    const sdk = sdkPath();
-    const pdc = `${sdk}/bin/pdc`;
+export function compile(
+  sdkPath: string,
+  source: string,
+  output: string
+): SpawnSyncReturns<string> | null {
+  const pdc = `${sdkPath}/bin/pdc`;
 
-    if (!(ws && sdk)) {
-        return false;
-    }
-
-    switch (process.platform) {
+  switch (process.platform) {
     case "win32":
-        spawnSync("cmd", ["/c", pdc, `${ws}/source`, `${ws}/output.pdx`]);
-        break;
+      return spawnSync("cmd", ["/c", pdc, source, output]);
     case "darwin":
-        spawnSync(pdc, [`${ws}/source`, `${ws}/output.pdx`]);
-        break;
-    default:
-		showMessage(`${process.platform} is not supported.`);
-    }
+      return spawnSync(pdc, [source, output]);
+  }
 
-    return true;
+  return null;
 }
 
-export function runSimulator(): boolean {
-    const ws = workspaceRoot();
-    const sdk = sdkPath();
-
-    if (!(ws && sdk)) {
-        return false;
-    }
-
-    switch (process.platform) {
+export function runSimulator(
+  sdkPath: string,
+  output: string
+): SpawnSyncReturns<string> | null {
+  switch (process.platform) {
     case "win32":
-        var simulator = `${sdk}\bin\PlaydateSimulator`;
-        spawnSync("cmd", ["/c", simulator, `${ws}/Output.pdx`]);
-        break;
+      var simulator = `${sdkPath}\bin\PlaydateSimulator`;
+      return spawnSync("cmd", ["/c", simulator, output]);
     case "darwin":
-        var simulator = `${sdk}/bin/Playdate Simulator.app`;
-        spawnSync("open", [simulator, `${ws}/Output.pdx`]);
-        break;
-    default:
-		showMessage(`Platform '${process.platform}' is not supported.`);
-    }
+      var simulator = `${sdkPath}/bin/Playdate Simulator.app`;
+      return spawnSync("open", [simulator, output]);
+  }
 
-    return true;
-}
-
-function showMessage(message: string) {
-	vscode.window.showInformationMessage(`vscode-playdate: ${message}`);
-}
-
-function sdkPath(): string | null {
-    if (process.env.PLAYDATE_SDK_PATH) {
-        return process.env.PLAYDATE_SDK_PATH;
-    }
-
-    const settings = vscode.workspace.getConfiguration();
-    const sdkPath = settings.get<string>('playdate.sdkPath');
-    if (sdkPath) {
-        return sdkPath;
-    }
-
-    showMessage("Failed to get sdk path.");
-
-    return null;
-}
-
-function workspaceRoot(): string | null {
-    const folders = vscode.workspace.workspaceFolders;
-
-    if (folders?.length !== 1) {
-		showMessage('Failed to get workspace root, ensure exactly one workspace is open.');
-        return null;
-    }
-
-    return folders[0].uri.fsPath;
+  return null;
 }

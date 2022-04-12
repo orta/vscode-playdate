@@ -38,7 +38,62 @@
           }
         }
       }
-    }
+    },
+    "debuggers": [
+      {
+        "type": "playdate",
+        "label": "Playdate",
+        "program": "./out/startSim.js",
+        "runtime": "node",
+        "configurationAttributes": {
+          "launch": {
+            "properties": {}
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "playdate",
+            "request": "launch",
+            "name": "Run app in Playdate simulator"
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Playdate: Run",
+            "description": "Compile and launch in Playdate sim.",
+            "body": {
+              "type": "playdate",
+              "request": "launch",
+              "name": "Run the app in Playdate simulator",
+              "required": [
+                "source",
+                "output"
+              ],
+              "optional": [
+                "sdkPath"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "description": "Path to the root of your source code.",
+                  "default": "${workspaceFolder}/source"
+                },
+                "output": {
+                  "type": "string",
+                  "description": "Path to the root of your outputs.",
+                  "default": "${workspaceFolder}/output.pdx"
+                },
+                "sdkPath": {
+                  "type": "string",
+                  "description": "Path to the root of your SDK.",
+                  "default": "${env:PLAYDATE_SDK_PATH}"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
   },
   "extensionDependencies": [
     "sumneko.lua"
