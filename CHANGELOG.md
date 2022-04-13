@@ -6,7 +6,7 @@
 
 ## [0.0.5]
 
-- add support for Winodws
+- add support for Windows
 
 ## [0.0.1]
 
