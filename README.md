@@ -24,7 +24,7 @@ libraries:
 ```
 
 To compile and run your code in the simulator hit or `Cmd + Shift + P` on Mac or
-`Ctrl + Shift + P` on Windows and search for "Run in Playdate simulator".
+`Ctrl + Shift + P` on Windows and search for "Run app in Playdate simulator".
 
 That's it, you get auto-completion and the ability to hit a command to trigger
 loading it into the sim.

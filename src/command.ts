@@ -11,7 +11,7 @@ export function compileWithDefaults(): boolean {
 
   let result = playdate.compile(sdk, `${ws}/source`, `${ws}/output.pdx`);
   if (result?.status !== 0 || !result) {
-    showMessage("failed to compile project");
+    showMessage("Failed to compile project.");
     return false;
   }
 
@@ -28,7 +28,7 @@ export function runSimulatorWithDefaults(): boolean {
 
   let result = playdate.runSimulator(sdk, `${ws}/output.pdx`);
   if (result?.status !== 0 || !result) {
-    showMessage("failed to start simulator");
+    showMessage("Failed to start simulator.");
     return false;
   }
 

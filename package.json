@@ -23,7 +23,7 @@
     "commands": [
       {
         "command": "extension.runSimulator",
-        "title": "Run in Playdate simulator"
+        "title": "Run app in Playdate simulator"
       }
     ],
     "contributes": {
