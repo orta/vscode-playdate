@@ -1,33 +1,26 @@
 import { LoggingDebugSession, TerminatedEvent } from "vscode-debugadapter";
-import { spawnSync } from "child_process";
 import { DebugProtocol } from "vscode-debugprotocol";
+import * as playdate from "./playdate";
 
 interface LaunchRequestArguments extends DebugProtocol.LaunchRequestArguments {
   source: string;
   output: string;
+  sdkPath: string;
 }
 
 export class MockDebugSession extends LoggingDebugSession {
-  protected async launchRequest(response: DebugProtocol.LaunchResponse, args: LaunchRequestArguments) {
-    // Open the Sim, and then close this debugger
-    var cmd: string;
-    var spawnArgs: string[];
-
-    switch (process.platform) {
-      case "win32":
-        cmd = "cmd";
-        spawnArgs = ["/c", "start", `${args.output}/main.pdz`];
-        break;
-      case "darwin":
-        cmd = "open";
-        spawnArgs = [args.output];
-        break;
-      default:
-        console.log("os not supported");
-        return;
+  protected async launchRequest(
+    response: DebugProtocol.LaunchResponse,
+    args: LaunchRequestArguments
+  ) {
+    var sdkPath = args.sdkPath;
+    if (process.env.PLAYDATE_SDK_PATH) {
+      sdkPath = process.env.PLAYDATE_SDK_PATH;
     }
 
-    spawnSync(cmd, spawnArgs);
+    playdate.compile(sdkPath, args.source, args.output);
+    playdate.runSimulator(sdkPath, args.output);
+
     this.sendEvent(new TerminatedEvent());
   }
 }

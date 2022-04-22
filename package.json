@@ -3,7 +3,7 @@
   "displayName": "Playdate",
   "description": "Simple Playdate support for VSCode",
   "publisher": "Orta",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/orta/vscode-playdate"
@@ -16,10 +16,29 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:lua"
+    "onCommand:extension.runSimulator"
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "commands": [
+      {
+        "command": "extension.runSimulator",
+        "title": "Run app in Playdate simulator"
+      }
+    ],
+    "contributes": {
+      "configuration": {
+        "id": "vscode-playdate",
+        "title": "Playdate",
+        "properties": {
+          "playdate.sdkPath": {
+            "type": "string",
+            "default": "${env:PLAYDATE_SDK_PATH}",
+            "description": "The path to the Playdate SDK (default to PLAYDATE_SDK_PATH environment variable)"
+          }
+        }
+      }
+    },
     "debuggers": [
       {
         "type": "playdate",
@@ -50,16 +69,24 @@
                 "source",
                 "output"
               ],
+              "optional": [
+                "sdkPath"
+              ],
               "properties": {
                 "source": {
                   "type": "string",
                   "description": "Path to the root of your source code.",
-                  "default": "${workspaceFolder}/Source"
+                  "default": "${workspaceFolder}/source"
                 },
                 "output": {
                   "type": "string",
                   "description": "Path to the root of your outputs.",
-                  "default": "${workspaceFolder}/Output.pdx"
+                  "default": "${workspaceFolder}/output.pdx"
+                },
+                "sdkPath": {
+                  "type": "string",
+                  "description": "Path to the root of your SDK.",
+                  "default": "${env:PLAYDATE_SDK_PATH}"
                 }
               }
             }

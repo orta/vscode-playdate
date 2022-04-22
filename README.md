@@ -1,69 +1,71 @@
 # VS Code Playdate
 
-Only really adds the ability to hit "Run" and trigger opening the sim, but has docs on how to set up the Lua extension
+Adds a custom command to compile your code and run it in the Playdate Simulator.
 
 <img src="./screenshots/desktop.jpeg">
 
-### Getting Set Up
+## Getting Set Up
 
-1. Go to your Playdate game
-1. Add the SDK library to the Lua extension by adding/editing `.vscode/settings.json`
+Since this plugin will need to access both `pdc` (the Playdate compiler) and the
+actual simulator which is bundled in the SDK the plugin needs to be able to
+determine where that is installed.
 
-```diff
+Either configure your environment variable `PLAYDATE_SDK_PATH` or add it in the
+settings. While in the settings it's also a good idea to add the Lua workspace
+libraries:
+
+```json
 {
-  "Lua.diagnostics.globals": ["playdate", "import"],
   "Lua.workspace.library": [
     "/Users/ortatherox/Developer/PlaydateSDK/CoreLibs"
-  ]
+  ],
+  "playdate.sdkPath": "/Users/ortatherox/Developer/PlaydateSDK"
 }
 ```
 
-Change my name to yours too...
+To compile and run your code in the simulator hit or `Cmd + Shift + P` on Mac or
+`Ctrl + Shift + P` on Windows and search for "Run app in Playdate simulator".
 
-1. Add a compile task by creating `.vscode/tasks.json`
+That's it, you get auto-completion and the ability to hit a command to trigger
+loading it into the sim.
 
-```json
-{
-	"version": "2.0.0",
-	"tasks": [{
-			"label": "Compile App",
-			"command": "pdc",
-			"args": ["Source", "Output.pdx"],
-			"type": "shell"
-	}]
-}
-```
+### Run as debugger
 
-This runs `pdc Source Output.pdx`.
-
-1. Add a launch task by creating `.vscode/launch.json`:
+This plugin can also be configured to run as a debugger and launch the
+simulator by hitting `F5` (or your configured key). To use it this way create
+the following `.vscode/launch.json`"
 
 ```json
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
       "request": "launch",
       "type": "playdate",
       "name": "Run app in Playdate simulator",
-      "preLaunchTask": "Compile App",
-      "source": "${workspaceFolder}/Source",
-      "output": "${workspaceFolder}/Output.pdx",
+      "source": "${workspaceRoot}/source",
+      "output": "${workspaceRoot}/output.pdx",
+      // Optionally set sdkPath if not PLAYDATE_SDK_PATH is configured.
+      // "sdkPath": "/Users/ortatherox/Developer/PlaydateSDK"
     }
   ]
 }
 ```
-
-That's it, you get auto-completion and the ability to hit a command to trigger loading it into the sim.
 
 ### Notes
 
 The playdate version of Lua has a few extras:
 
 - The `import` function
-- `+=` and `-=` 
+- `+=` and `-=`
 
-Both of these don't exist in normal Lua, so `import` is declared as a global, and I've been converting `+=` to the long form `x = x + 1`.
+To make VS Code not mark these as invalid syntax you can add the following to your `settings.json`:
+
+```json
+"Lua.runtime.nonstandardSymbol": [
+  "+=",
+  "-=",
+  "*=",
+  "/="
+],
+```
