@@ -25,8 +25,11 @@ export function runSimulator(
     case "win32":
       var simulator = `${sdkPath}\\bin\\PlaydateSimulator.exe`;
       return spawnSync("cmd", ["/c", simulator, output]);
-    default:
+    case 'darwin':
       var simulator = `${sdkPath}/bin/Playdate Simulator.app`;
+      return spawnSync("open", [simulator, output]);
+    default:
+      var simulator = `${sdkPath}/bin/PlaydateSimulator`;
       return spawnSync("open", [simulator, output]);
   }
 
