@@ -9,7 +9,7 @@ export function compile(
     case "win32":
       var pdc = `${sdkPath}\\bin\\pdc`;
       return spawnSync("cmd", ["/c", pdc, source, output]);
-    case "darwin":
+    default:
       var pdc = `${sdkPath}/bin/pdc`;
       return spawnSync(pdc, [source, output]);
   }
@@ -27,6 +27,9 @@ export function runSimulator(
       return spawnSync("cmd", ["/c", simulator, output]);
     case "darwin":
       var simulator = `${sdkPath}/bin/Playdate Simulator.app`;
+      return spawnSync("open", [simulator, output]);
+    default:
+      var simulator = `${sdkPath}/bin/PlaydateSimulator`;
       return spawnSync("open", [simulator, output]);
   }
 
