@@ -33,7 +33,6 @@
         "properties": {
           "playdate.sdkPath": {
             "type": "string",
-            "default": "${env:PLAYDATE_SDK_PATH}",
             "description": "The path to the Playdate SDK (default to PLAYDATE_SDK_PATH environment variable)"
           }
         }
@@ -47,14 +46,38 @@
         "runtime": "node",
         "configurationAttributes": {
           "launch": {
-            "properties": {}
+            "required": [
+              "source",
+              "output"
+            ],
+            "optional": [
+              "sdkPath"
+            ],
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Path to the root of your source code.",
+                "default": "${workspaceFolder}/source"
+              },
+              "output": {
+                "type": "string",
+                "description": "Path to the root of your outputs.",
+                "default": "${workspaceFolder}/output.pdx"
+              },
+              "sdkPath": {
+                "type": "string",
+                "description": "Path to the root of your SDK."
+              }
+            }
           }
         },
         "initialConfigurations": [
           {
             "type": "playdate",
             "request": "launch",
-            "name": "Run app in Playdate simulator"
+            "name": "Run app in Playdate simulator",
+            "source": "${workspaceFolder}/source",
+            "output": "${workspaceFolder}/output.pdx"
           }
         ],
         "configurationSnippets": [
@@ -65,13 +88,6 @@
               "type": "playdate",
               "request": "launch",
               "name": "Run the app in Playdate simulator",
-              "required": [
-                "source",
-                "output"
-              ],
-              "optional": [
-                "sdkPath"
-              ],
               "properties": {
                 "source": {
                   "type": "string",
@@ -85,8 +101,7 @@
                 },
                 "sdkPath": {
                   "type": "string",
-                  "description": "Path to the root of your SDK.",
-                  "default": "${env:PLAYDATE_SDK_PATH}"
+                  "description": "Path to the root of your SDK."
                 }
               }
             }
