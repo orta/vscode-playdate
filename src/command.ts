@@ -2,14 +2,27 @@ import * as vscode from "vscode";
 import * as playdate from "./playdate";
 
 export function compileWithDefaults(): boolean {
-  const ws = workspaceRoot();
   const sdk = sdkPath();
-
-  if (!(ws && sdk)) {
+  if (!sdk) {
     return false;
   }
 
-  let result = playdate.compile(sdk, `${ws}/source`, `${ws}/output.pdx`);
+  const ws = workspaceRoot();
+  if (!ws) {
+    return false;
+  }
+
+  var source = getConfigByProperty("source");
+  if (!source) {
+    source = "source";
+  }
+
+  var output = getConfigByProperty("output");
+  if (!output) {
+    output = "output.pdx"
+  }
+
+  let result = playdate.compile(sdk, `${ws}/${source}`, `${ws}/${output}`);
   if (result?.status !== 0 || !result) {
     showMessage("Failed to compile project.");
     return false;
@@ -19,14 +32,22 @@ export function compileWithDefaults(): boolean {
 }
 
 export function runSimulatorWithDefaults(): boolean {
-  const ws = workspaceRoot();
   const sdk = sdkPath();
-
-  if (!(ws && sdk)) {
+  if (!sdk) {
     return false;
   }
 
-  let result = playdate.runSimulator(sdk, `${ws}/output.pdx`);
+  const ws = workspaceRoot();
+  if (!ws) {
+    return false;
+  }
+
+  var output = getConfigByProperty("output");
+  if (!output) {
+    output = "output.pdx"
+  }
+
+  let result = playdate.runSimulator(sdk, `${ws}/${output}`);
   if (result?.status !== 0 || !result) {
     showMessage("Failed to start simulator.");
     return false;
@@ -44,8 +65,7 @@ function sdkPath(): string | null {
     return process.env.PLAYDATE_SDK_PATH;
   }
 
-  const settings = vscode.workspace.getConfiguration();
-  const sdkPath = settings.get<string>("playdate.sdkPath");
+  const sdkPath = getConfigByProperty("sdkPath");
   if (sdkPath) {
     return sdkPath;
   }
@@ -53,6 +73,11 @@ function sdkPath(): string | null {
   showMessage("Failed to get sdk path.");
 
   return null;
+}
+
+function getConfigByProperty(configKey: string): string | undefined {
+  const settings = vscode.workspace.getConfiguration();
+  return settings.get<string>(`playdate.${configKey}`);
 }
 
 function workspaceRoot(): string | null {
