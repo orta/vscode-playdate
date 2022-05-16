@@ -33,17 +33,17 @@
         "properties": {
           "playdate.sdkPath": {
             "type": "string",
-            "description": "The path to the Playdate SDK (default to PLAYDATE_SDK_PATH environment variable)",
+            "description": "The path to the Playdate SDK (default to PLAYDATE_SDK_PATH environment variable)"
           },
           "playdate.source": {
             "type": "string",
             "description": "Path to the root of your source code.",
-            "default": "source"
+            "default": "Source"
           },
           "playdate.output": {
             "type": "string",
             "description": "Path to the root of your outputs.",
-            "default": "output.pdx"
+            "default": "Output.pdx"
           }
         }
       }
@@ -85,12 +85,12 @@
                 "source": {
                   "type": "string",
                   "description": "Path to the root of your source code.",
-                  "default": "${workspaceFolder}/source"
+                  "default": "${workspaceFolder}/Source"
                 },
                 "output": {
                   "type": "string",
                   "description": "Path to the root of your outputs.",
-                  "default": "${workspaceFolder}/output.pdx"
+                  "default": "${workspaceFolder}/Output.pdx"
                 },
                 "sdkPath": {
                   "type": "string",

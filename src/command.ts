@@ -14,12 +14,12 @@ export function compileWithDefaults(): boolean {
 
   var source = getConfigByProperty("source");
   if (!source) {
-    source = "source";
+    source = "Source";
   }
 
   var output = getConfigByProperty("output");
   if (!output) {
-    output = "output.pdx"
+    output = "Output.pdx";
   }
 
   let result = playdate.compile(sdk, `${ws}/${source}`, `${ws}/${output}`);
@@ -44,7 +44,7 @@ export function runSimulatorWithDefaults(): boolean {
 
   var output = getConfigByProperty("output");
   if (!output) {
-    output = "output.pdx"
+    output = "Output.pdx";
   }
 
   let result = playdate.runSimulator(sdk, `${ws}/${output}`);
