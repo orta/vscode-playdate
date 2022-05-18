@@ -3,7 +3,7 @@
   "displayName": "Playdate",
   "description": "Simple Playdate support for VSCode",
   "publisher": "Orta",
-  "version": "0.0.7",
+  "version": "0.9.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/orta/vscode-playdate"
