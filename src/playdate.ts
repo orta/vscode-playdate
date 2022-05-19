@@ -30,7 +30,7 @@ export function runSimulator(
       return spawnSync("open", [simulator, output]);
     default:
       var simulator = `${sdkPath}/bin/PlaydateSimulator`;
-      return spawnSync("open", [simulator, output]);
+      return spawnSync(simulator, [output]);
   }
 
   return null;
