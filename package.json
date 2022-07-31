@@ -26,8 +26,8 @@
         "title": "Run app in Playdate simulator"
       }
     ],
-    "contributes": {
-      "configuration": {
+    "configuration": [
+      {
         "id": "vscode-playdate",
         "title": "Playdate",
         "properties": {
@@ -47,7 +47,7 @@
           }
         }
       }
-    },
+    ],
     "debuggers": [
       {
         "type": "playdate",
