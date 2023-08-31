@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import * as playdate from "./playdate";
+import { SpawnSyncReturns } from "child_process";
 
 export function compileWithDefaults(): boolean {
   const sdk = sdkPath();
@@ -24,7 +25,8 @@ export function compileWithDefaults(): boolean {
 
   let result = playdate.compile(sdk, `${ws}/${source}`, `${ws}/${output}`);
   if (result?.status !== 0 || !result) {
-    showMessage("Failed to compile project.");
+    const extraContext = processContext(result);
+    showMessage("Failed to compile project." + extraContext);
     return false;
   }
 
@@ -49,11 +51,33 @@ export function runSimulatorWithDefaults(): boolean {
 
   let result = playdate.runSimulator(sdk, `${ws}/${output}`);
   if (result?.status !== 0 || !result) {
-    showMessage("Failed to start simulator.");
+    const extraContext = processContext(result);
+    showMessage("Failed to start simulator." + extraContext);
     return false;
   }
 
   return true;
+}
+
+function processContext(result: SpawnSyncReturns<string> | null): string {
+  if (!result) {
+    return "";
+  }
+
+  var extraContext = "";
+  if (result?.error) {
+    extraContext += "\n" + result?.error;
+  }
+
+  if (result?.stdout.toString()) {
+    extraContext += "\n" + result?.stdout.toString();
+  }
+
+  if (result?.stderr.toString()) {
+    extraContext += "\n" + result?.stderr.toString();
+  }
+
+  return extraContext;
 }
 
 function showMessage(message: string) {
